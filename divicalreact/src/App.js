@@ -6,18 +6,18 @@ class App extends Component {
   constructor(){
     super()
     this.state = {
-      ticker: '',
-      value: ''
+      value: '',
+      ticker: ''
     }
-    this.handleSubmit = this.handleSubmit.bind(this)
+
+    this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleSubmit(){
-    axios.get('http://localhost:8080/dividends/getByTicker?ticker='+this.state.value)
-      .then(response => console.log(response.data.ticker))
-      //      .then(response => this.setState({ticker: response.data.ticker}))
-      console.log(this.state.ticker)
+  handleClick(){
+    axios.get('http://localhost:8080/dividends/getByTicker?ticker=' + this.state.value)
+    .then(response => this.setState({ticker: response.data.ticker}))
+    alert(this.state.ticker)
   }
 
   handleChange(event) {
@@ -26,12 +26,13 @@ class App extends Component {
 
   render () {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form>
         <label>
           Name:
           <input type="text" value={this.state.value} onChange={this.handleChange} />
         </label>
-        <input type="submit" value="Submit" />
+        <button className='button' onClick={this.handleClick}>Click Me</button>
+        <p>{this.state.ticker}</p>
       </form>
     )
   }
