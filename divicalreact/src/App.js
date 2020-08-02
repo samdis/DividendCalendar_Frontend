@@ -21,27 +21,69 @@ class App extends Component {
       rowData: []
     }
 
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.addRowData = this.addRowData.bind(this);
+    this.handleClick      = this.handleClick.bind(this);
+    this.handleChange     = this.handleChange.bind(this);
+    this.addRowData       = this.addRowData.bind(this);
     //google cal
-    this.handleItemClick = this.handleItemClick.bind(this);
+    this.handleItemClick  = this.handleItemClick.bind(this);
+    this.handleSignIn     = this.handleSignIn.bind(this);
+    this.handleSignOut    = this.handleSignOut.bind(this);
+    this.createEvent      = this.createEvent.bind(this);
+    this.showAllEvents    = this.showAllEvents.bind(this);
+
+    //helpers for adding events
+    this.buildEvent = this.buildEvent.bind(this);
   }
+
+  showAllEvents(){
+    var events = [];
+    var rowDataLoc = this.state.rowData;
+    rowDataLoc.forEach((value, i) => {
+      console.log(value.ticker);
+      var dateArray = value.dates.split(',');
+      dateArray.forEach((date, i) => {
+        console.log(date);
+        //events.push({ticker: value.ticker, date});
+        this.buildEvent(value.ticker, date);
+      });
+    });
+  }
+
+  buildEvent(ticker, date){
+    var tz = 'America/New_York';
+    var event = {
+      'summary' : ticker,
+      'description' : 'Ex-dividend date',
+      'start' :{
+        'date' : date,
+        'timezone': tz
+      },
+      'end': {
+        'date' : date,
+        'timezone' : tz
+      }
+    };
+    ApiCalendar.createEvent(event);
+  }
+
+
 
   handleClick(){
     axios.get('http://localhost:8080/dividends/getByTicker?ticker=' + this.state.value)
     .then(response => { console.log(response);
-                        //this.setState({rowData: [{ticker:response.data.ticker, dates:response.data.dates.toString()}]});
                         this.addRowData(response);
                       });
   }
 
-  public handleItemClick(event: SyntheticEvent<any>, name: string): void {
-      if (name === 'sign-in') {
-        ApiCalendar.handleAuthClick();
-      } else if (name === 'sign-out') {
-        ApiCalendar.handleSignoutClick();
-      }
+  handleSignIn()
+  {
+    ApiCalendar.handleAuthClick();
+  }
+
+  handleSignOut()
+  {
+    ApiCalendar.handleSignoutClick();
+  }
 
   addRowData(response)
   {
@@ -53,6 +95,19 @@ class App extends Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
+  }
+
+  createEvent()
+  {
+    ApiCalendar.createEventFromNow({
+      summary: "test event",
+      time: 480
+    }).then((result : object) => {
+      console.log(result)
+    })
+    .catch((error: any) => {
+      console.console.log(error);
+    })
   }
 
   render () {
@@ -74,16 +129,20 @@ class App extends Component {
             rowData={this.state.rowData}>
           </AgGridReact>
         </div>
-        <button
-            onClick={(e) => this.handleItemClick(e, 'sign-in')}
-        >
+        <div>
+        <button onClick={this.handleSignIn}>
           sign-in
         </button>
-        <button
-            onClick={(e) => this.handleItemClick(e, 'sign-out')}
-        >
+        <button onClick={this.handleSignOut}>
           sign-out
         </button>
+        <button onClick={this.createEvent}>
+          create test event
+        </button>
+        <button onClick={this.showAllEvents}>
+          Add events to calendar
+        </button>
+        </div>
       </div>
     )
   }
