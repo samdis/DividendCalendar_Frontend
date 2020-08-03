@@ -55,7 +55,7 @@ class App extends Component {
     var dateString = d.toISOString().slice(0,10);
     var event = {
       summary,
-      "Ex-dividend date",
+      description : "Ex-dividend date",
       start :{
         date : dateString,
         timezone: tz
