@@ -63,6 +63,7 @@ class App extends Component {
         'timezone' : tz
       }
     };
+    console.log(event);
     ApiCalendar.createEvent(event);
   }
 
