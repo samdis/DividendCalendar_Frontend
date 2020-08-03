@@ -69,7 +69,7 @@ class App extends Component {
 
 
   handleClick(){
-    axios.get('http://dividendcalendar.ml/api/dividends/getByTicker?ticker=' + this.state.value)
+    axios.get('https://dividendcalendar.ml/api/dividends/getByTicker?ticker=' + this.state.value)
     .then(response => { console.log(response);
                         this.addRowData(response);
                       });
