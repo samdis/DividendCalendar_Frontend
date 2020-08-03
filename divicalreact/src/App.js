@@ -59,7 +59,7 @@ class App extends Component {
       summary,
       description : "Ex-dividend date",
       start :{
-        dateTime : dateString,
+        dateTime : dateStringStart,
         timeZone: tz
       },
       end: {
