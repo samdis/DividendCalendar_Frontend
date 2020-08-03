@@ -58,11 +58,11 @@ class App extends Component {
       description : "Ex-dividend date",
       start :{
         date : dateString,
-        timezone: tz
+        timeZone: tz
       },
       end: {
         date : dateString,
-        timezone : tz
+        timeZone : tz
       }
     };
     console.log(event);
