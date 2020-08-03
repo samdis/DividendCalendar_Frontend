@@ -60,11 +60,11 @@ class App extends Component {
       description : "Ex-dividend date",
       start :{
         dateTime : dateStringStart,
-        timeZone: tz
+        timeZone: tz,
       },
       end: {
         dateTime : dateStringEnd,
-        timeZone : tz
+        timeZone : tz,
       }
     };
     console.log(event);
