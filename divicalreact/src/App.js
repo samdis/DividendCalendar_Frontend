@@ -54,15 +54,15 @@ class App extends Component {
     var d = new Date(date);
     var dateString = d.toISOString().slice(0,10);
     var event = {
-      'summary' : ticker,
-      'description' : 'Ex-dividend date',
-      'start' :{
-        'date' : dateString,
-        'timezone': tz
+      summary : ticker,
+      description : "Ex-dividend date",
+      start :{
+        date : dateString,
+        timezone: tz
       },
-      'end': {
-        'date' : dateString,
-        'timezone' : tz
+      end: {
+        date : dateString,
+        timezone : tz
       }
     };
     console.log(event);
