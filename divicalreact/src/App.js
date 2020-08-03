@@ -49,13 +49,13 @@ class App extends Component {
     });
   }
 
-  buildEvent(ticker, date){
-    var tz = 'America/New_York';
+  buildEvent(summary, date){
+    var tz = "America/New_York";
     var d = new Date(date);
     var dateString = d.toISOString().slice(0,10);
     var event = {
-      summary : ticker,
-      description : "Ex-dividend date",
+      summary,
+      "Ex-dividend date",
       start :{
         date : dateString,
         timezone: tz
