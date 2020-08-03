@@ -51,15 +51,17 @@ class App extends Component {
 
   buildEvent(ticker, date){
     var tz = 'America/New_York';
+    var d = new Date(date);
+    var dateString = d.toISOString();
     var event = {
       'summary' : ticker,
       'description' : 'Ex-dividend date',
       'start' :{
-        'date' : date,
+        'date' : dateString,
         'timezone': tz
       },
       'end': {
-        'date' : date,
+        'date' : dateString,
         'timezone' : tz
       }
     };
