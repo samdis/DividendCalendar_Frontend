@@ -52,7 +52,9 @@ class App extends Component {
   buildEvent(summary, date){
     var tz = "America/New_York";
     var d = new Date(date);
-    var dateString = d.toISOString();//.slice(0,10);
+    var dateStringStart = d.toISOString();//.slice(0,10);
+    var dEnd = d.addDays(1);
+    var dateStringEnd = d.toISOString(dEnd);
     var event = {
       summary,
       description : "Ex-dividend date",
@@ -61,7 +63,7 @@ class App extends Component {
         timeZone: tz
       },
       end: {
-        dateTime : dateString,
+        dateTime : dateStringEnd,
         timeZone : tz
       }
     };
