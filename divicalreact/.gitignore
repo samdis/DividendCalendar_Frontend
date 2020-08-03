@@ -86,4 +86,4 @@ typings/
 # dotenv environment variables file
 .env
 
-/DiviCal.pem
+.pem
