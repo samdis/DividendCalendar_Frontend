@@ -53,9 +53,8 @@ class App extends Component {
     var tz = "America/New_York";
     var d = new Date(date);
     var dateStringStart = d.toISOString();//.slice(0,10);
-    var dEnd = new Date();
-    dEnd.setDate(d.getDate() + 1);
-    var dateStringEnd = dEnd.toISOString();
+    d.setDate(d.getDate() + 1);
+    var dateStringEnd = d.toISOString();
     var event = {
       summary,
       description : "Ex-dividend date",
