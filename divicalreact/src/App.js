@@ -25,7 +25,7 @@ class App extends Component {
     this.handleChange     = this.handleChange.bind(this);
     this.addRowData       = this.addRowData.bind(this);
     //google cal
-    this.handleItemClick  = this.handleItemClick.bind(this);
+    //this.handleItemClick  = this.handleItemClick.bind(this);
     this.handleSignIn     = this.handleSignIn.bind(this);
     this.handleSignOut    = this.handleSignOut.bind(this);
     this.createEvent      = this.createEvent.bind(this);
