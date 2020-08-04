@@ -129,8 +129,6 @@ class App extends Component {
 
   render () {
     return (
-
-      <div>
         <Container className="p-3">
         <Jumbotron>
         <label>
@@ -182,7 +180,6 @@ class App extends Component {
         </div>
         </Jumbotron>
         </Container>
-      </div>
     )
   }
 }
