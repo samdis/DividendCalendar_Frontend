@@ -44,7 +44,6 @@ class App extends Component {
 
   showAllEvents(){
     alert("Adding dates to calendar!")
-    var events = [];
     var rowDataLoc = this.state.rowData;
     rowDataLoc.forEach((value, i) => {
       console.log(value.ticker);
