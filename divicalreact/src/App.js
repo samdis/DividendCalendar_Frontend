@@ -5,6 +5,9 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import ApiCalendar from 'react-google-calendar-api';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Container from 'react-bootstrap/Container';
+
 
 class App extends Component {
   constructor(){
@@ -25,7 +28,6 @@ class App extends Component {
     this.handleChange     = this.handleChange.bind(this);
     this.addRowData       = this.addRowData.bind(this);
     //google cal
-    //this.handleItemClick  = this.handleItemClick.bind(this);
     this.handleSignIn     = this.handleSignIn.bind(this);
     this.handleSignOut    = this.handleSignOut.bind(this);
     this.createEvent      = this.createEvent.bind(this);
@@ -44,7 +46,6 @@ class App extends Component {
       var dateArray = value.dates.split(',');
       dateArray.forEach((date, i) => {
         console.log(date);
-        //events.push({ticker: value.ticker, date});
         this.buildEvent(value.ticker, date);
       });
     });
@@ -128,7 +129,10 @@ class App extends Component {
 
   render () {
     return (
+
       <div>
+        <Container className="p-3">
+        <Jumbotron>
         <label>
           Name:
           <input type="text" value={this.state.value} onChange={this.handleChange} />
@@ -159,6 +163,25 @@ class App extends Component {
           Add events to calendar
         </button>
         </div>
+        <div class="footer">
+        	<div class="card">
+            <div class="container">
+              <a href="https://github.com/samdis/DividendCalendar_Frontend"> Frontend </a>
+            </div>
+          </div>
+      		<div class="card">
+            <div class="container">
+              <a href="https://github.com/samdis/DividenCalendar_Backend"> Backend </a>
+            </div>
+        	</div>
+      		<div class="card">
+            <div class="container">
+              <a href="https://github.com/samdis/DividendCalendar_ETL"> ETL </a>
+            </div>
+          </div>
+        </div>
+        </Jumbotron>
+        </Container>
       </div>
     )
   }
