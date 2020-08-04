@@ -5,8 +5,14 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import ApiCalendar from 'react-google-calendar-api';
+
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button'
+import Navbar from 'react-bootstrap/Navbar'
+import InputGroup from 'react-bootstrap/InputGroup'
+import FormControl from 'react-bootstrap/FormControl'
+import Nav from 'react-bootstrap/Nav'
 
 
 class App extends Component {
@@ -30,7 +36,6 @@ class App extends Component {
     //google cal
     this.handleSignIn     = this.handleSignIn.bind(this);
     this.handleSignOut    = this.handleSignOut.bind(this);
-    this.createEvent      = this.createEvent.bind(this);
     this.showAllEvents    = this.showAllEvents.bind(this);
 
     //helpers for adding events
@@ -54,7 +59,7 @@ class App extends Component {
   buildEvent(summary, date){
     var tz = "America/New_York";
     var d = new Date(date);
-    var dateStringStart = d.toISOString();//.slice(0,10);
+    var dateStringStart = d.toISOString();
     d.setDate(d.getDate() + 1);
     var dateStringEnd = d.toISOString();
     var event = {
@@ -77,8 +82,6 @@ class App extends Component {
        console.log(error);
         });
   }
-
-
 
   handleClick(){
     axios.get('https://dividendcalendar.ml/api/dividends/getByTicker?ticker=' + this.state.value)
@@ -114,80 +117,91 @@ class App extends Component {
     this.setState({value: event.target.value});
   }
 
-  createEvent()
-  {
-    ApiCalendar.createEventFromNow({
-      summary: "test event",
-      time: 480
-    }).then((result : object) => {
-      console.log(result)
-    })
-    .catch((error: any) => {
-      console.console.log(error);
-    })
-  }
-
   onGridReady = params => {
    params.api.sizeColumnsToFit();
  };
 
   render () {
     return (
-      <div class="header">
-        <Container className="p-3">
-        <Jumbotron>
-        <h1>Dividend Calendar</h1>
-        <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <button className='button' onClick={this.handleClick}>Click Me</button>
-        <div
-            className="ag-theme-alpine"
-            style={{
-            height: '250px',
-            width: '100%' }}
+      <>
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand>
+            <img
+              src="/logo192.png"
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            />{' '}
+            Dividend Calendar
+          </Navbar.Brand>
+        </Navbar>
+        <div class="header">
+          <Container className="p-3">
+          <Jumbotron>
+          <h4> Select tickers below</h4>
+          <InputGroup className="mb-3" value={this.state.value} onChange={this.handleChange}>
+            <InputGroup.Prepend>
+              <Button
+                variant="outline-secondary"
+                onClick={this.handleClick}
+                >Add</Button>
+            </InputGroup.Prepend>
+            <FormControl aria-describedby="basic-addon1" />
+          </InputGroup>
+          <div
+              className="ag-theme-alpine"
+              style={{
+              height: '250px',
+              width: '100%' }}
+              >
+            <AgGridReact
+              columnDefs={this.state.columnDefs}
+              rowData={this.state.rowData}
+               onGridReady={this.onGridReady.bind(this)}>
+            </AgGridReact>
+          </div>
+          <div>
+          <button onClick={this.handleSignIn}>
+            sign-in
+          </button>
+          <button onClick={this.handleSignOut}>
+            sign-out
+          </button>
+          <button onClick={this.showAllEvents}>
+            Add events to calendar
+          </button>
+          </div>
+          </Jumbotron>
+          </Container>
+        </div>
+        <footer className='footer mt-auto py-3 bg-dark text-white'>
+          <div className='container'>
+            <Nav
+              activeKey="/home"
+              onSelect={(selectedKey) => window.open(selectedKey)}
             >
-          <AgGridReact
-            columnDefs={this.state.columnDefs}
-            rowData={this.state.rowData}
-             onGridReady={this.onGridReady.bind(this)}>
-          </AgGridReact>
-        </div>
-        <div>
-        <button onClick={this.handleSignIn}>
-          sign-in
-        </button>
-        <button onClick={this.handleSignOut}>
-          sign-out
-        </button>
-        <button onClick={this.createEvent}>
-          create test event
-        </button>
-        <button onClick={this.showAllEvents}>
-          Add events to calendar
-        </button>
-        </div>
-        <div class="footer">
-        	<div class="card">
-            <div class="container">
-              <a href="https://github.com/samdis/DividendCalendar_Frontend"> Frontend </a>
-            </div>
+              <Nav.Item>
+                <Nav.Link disabled>
+                <img
+                  src="/GitHub-Mark-Light-64px.png"
+                  width="30"
+                  height="30"
+                  />
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="https://github.com/samdis/DividendCalendar_Frontend">Frontend</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="https://github.com/samdis/DividenCalendar_Backend">Backend</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="https://github.com/samdis/DividendCalendar_ETL"> ETL </Nav.Link>
+              </Nav.Item>
+            </Nav>
           </div>
-      		<div class="card">
-            <div class="container">
-              <a href="https://github.com/samdis/DividenCalendar_Backend"> Backend </a>
-            </div>
-        	</div>
-      		<div class="card">
-            <div class="container">
-              <a href="https://github.com/samdis/DividendCalendar_ETL"> ETL </a>
-            </div>
-          </div>
-        </div>
-        </Jumbotron>
-        </Container>
-      </div>
+        </footer>
+      </>
     )
   }
 }
