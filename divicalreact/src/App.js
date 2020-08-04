@@ -133,8 +133,10 @@ class App extends Component {
 
   render () {
     return (
+      <div class="header">
         <Container className="p-3">
         <Jumbotron>
+        <h1>Dividend Calendar</h1>
         <label>
           Name:
           <input type="text" value={this.state.value} onChange={this.handleChange} />
@@ -185,6 +187,7 @@ class App extends Component {
         </div>
         </Jumbotron>
         </Container>
+      </div>
     )
   }
 }
