@@ -36,6 +36,7 @@ class App extends Component {
   }
 
   showAllEvents(){
+    alert("Adding dates to calendar!")
     var events = [];
     var rowDataLoc = this.state.rowData;
     rowDataLoc.forEach((value, i) => {
@@ -68,7 +69,12 @@ class App extends Component {
       }
     };
     console.log(event);
-    ApiCalendar.createEvent(event);
+    ApiCalendar.createEvent(event).then((result: object) => {
+      console.log(result);
+        })
+     .catch((error: any) => {
+       console.log(error);
+        });
   }
 
 
@@ -88,13 +94,18 @@ class App extends Component {
   handleSignOut()
   {
     ApiCalendar.handleSignoutClick();
+    alert("Signed out!")
   }
 
   addRowData(response)
   {
+  if(response.status == 200 && response.data.dates.length != 0){
     this.setState({
       rowData : this.state.rowData.concat({ticker:response.data.ticker, dates:response.data.dates.toString()})
     });
+  }else{
+    alert("No dates found")
+  }
     console.log(this.state.rowData);
   }
 
