@@ -127,6 +127,10 @@ class App extends Component {
     })
   }
 
+  onGridReady = params => {
+   params.api.sizeColumnsToFit();
+ };
+
   render () {
     return (
         <Container className="p-3">
@@ -140,11 +144,12 @@ class App extends Component {
             className="ag-theme-alpine"
             style={{
             height: '250px',
-            width: '600px' }}
+            width: '100%' }}
             >
           <AgGridReact
             columnDefs={this.state.columnDefs}
-            rowData={this.state.rowData}>
+            rowData={this.state.rowData}
+             onGridReady={this.onGridReady.bind(this)}>
           </AgGridReact>
         </div>
         <div>
