@@ -13,9 +13,6 @@ import Navbar from 'react-bootstrap/Navbar'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import Nav from 'react-bootstrap/Nav'
-import Badge from 'react-bootstrap/Badge'
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
-
 
 class App extends Component {
   constructor(){
@@ -27,7 +24,7 @@ class App extends Component {
       columnDefs: [{
         headerName: "Ticker", field: "ticker"
       }, {
-        headerName: "Date", field: "dates"
+        headerName: "Ex-Dividend Date", field: "dates"
       }],
       rowData: [],
       isLoggedIn : false
@@ -40,6 +37,8 @@ class App extends Component {
     this.handleSignIn     = this.handleSignIn.bind(this);
     this.handleSignOut    = this.handleSignOut.bind(this);
     this.showAllEvents    = this.showAllEvents.bind(this);
+    this.resetValue       = this.resetValue.bind(this);
+    this.handleAdd        = this.handleAdd.bind(this);
 
     //helpers for adding events
     this.buildEvent = this.buildEvent.bind(this);
@@ -86,12 +85,36 @@ class App extends Component {
         });
   }
 
-  handleClick(){
-    axios.get('https://dividendcalendar.ml/api/dividends/getByTicker?ticker=' + this.state.value)
-    .then(response => { console.log(response);
-                        this.addRowData(response);
-                      });
+  handleAdd(){
+    if(!this.state.rowData.some(item => this.state.value === item.ticker))
+    {
+      axios.get('https://dividendcalendar.ml/api/dividends/getByTicker?ticker=' + this.state.value)
+      .then(response => { console.log(response);
+                          this.addRowData(response);
+                        });
+    }
+    else {
+      alert("Ticker already selected!");
+    }
   }
+
+  handleClick(){
+    this.handleAdd();
+    this.resetValue();
+  }
+
+  addRowData(response)
+  {
+    if(response.status == 200 && response.data.dates.length != 0){
+      this.setState({
+        rowData : this.state.rowData.concat({ticker:response.data.ticker, dates:response.data.dates.toString()})
+      });
+    }else{
+      alert("No dates found")
+    }
+      console.log(this.state.rowData);
+  }
+
 
   handleSignIn()
   {
@@ -106,20 +129,13 @@ class App extends Component {
     alert("Signed out!")
   }
 
-  addRowData(response)
-  {
-  if(response.status == 200 && response.data.dates.length != 0){
-    this.setState({
-      rowData : this.state.rowData.concat({ticker:response.data.ticker, dates:response.data.dates.toString()})
-    });
-  }else{
-    alert("No dates found")
-  }
-    console.log(this.state.rowData);
-  }
+
 
   handleChange(event) {
     this.setState({value: event.target.value.toUpperCase()});
+  }
+
+  resetValue(){
   }
 
   onGridReady = params => {
@@ -164,7 +180,8 @@ class App extends Component {
             <AgGridReact
               columnDefs={this.state.columnDefs}
               rowData={this.state.rowData}
-               onGridReady={this.onGridReady.bind(this)}>
+               onGridReady={this.onGridReady.bind(this)}
+               >
             </AgGridReact>
           </div>
           <div>
