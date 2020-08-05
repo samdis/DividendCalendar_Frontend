@@ -142,7 +142,7 @@ class App extends Component {
     } else {
       body =
         <div class="header">
-          <h4> Select tickers below</h4>
+          <h2><i class="fa fa-search"></i> Select Stock Tickers</h2>
           <InputGroup className="mb-3" value={this.state.value} onChange={this.handleChange}>
             <InputGroup.Prepend>
               <Button
