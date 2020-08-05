@@ -14,6 +14,8 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import Nav from 'react-bootstrap/Nav'
 import Badge from 'react-bootstrap/Badge'
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
+
 
 class App extends Component {
   constructor(){
@@ -54,6 +56,7 @@ class App extends Component {
         this.buildEvent(value.ticker, date);
       });
     });
+    this.setState({rowData : []});
   }
 
   buildEvent(summary, date){
@@ -165,8 +168,11 @@ class App extends Component {
             </AgGridReact>
           </div>
           <div>
-          <Button variant="secondary" size="lg" onClick={this.showAllEvents} block>
+          <Button variant="primary" size="lg" onClick={this.showAllEvents} block>
             <i class="fa fa-calendar"></i> Add Events
+          </Button>
+          <Button variant="secondary" size="lg" onClick={this.showAllEvents} block>
+            <i class="fa fa-google"></i> Sign out
           </Button>
           </div>
         </div>;
