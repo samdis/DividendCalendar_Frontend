@@ -94,7 +94,6 @@ class App extends Component {
   {
     ApiCalendar.handleAuthClick()
     this.setState({isLoggedIn: true})
-    //alert("Signed in!")
   }
 
   handleSignOut()
@@ -117,7 +116,7 @@ class App extends Component {
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({value: event.target.value.toUpperCase()});
   }
 
   onGridReady = params => {
@@ -177,7 +176,6 @@ class App extends Component {
     return(
       <>
       <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand>
             <img
