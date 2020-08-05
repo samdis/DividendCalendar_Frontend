@@ -171,7 +171,7 @@ class App extends Component {
           <Button variant="primary" size="lg" onClick={this.showAllEvents} block>
             <i class="fa fa-calendar"></i> Add Events
           </Button>
-          <Button variant="secondary" size="lg" onClick={this.showAllEvents} block>
+          <Button variant="secondary" size="lg" onClick={this.handleSignOut} block>
             <i class="fa fa-google"></i> Sign out
           </Button>
           </div>
