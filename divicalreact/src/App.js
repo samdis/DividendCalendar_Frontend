@@ -14,7 +14,6 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import Nav from 'react-bootstrap/Nav'
 
-
 class App extends Component {
   constructor(){
     super()
@@ -27,7 +26,8 @@ class App extends Component {
       }, {
         headerName: "Date", field: "dates"
       }],
-      rowData: []
+      rowData: [],
+      isLoggedIn : false
     }
 
     this.handleClick      = this.handleClick.bind(this);
@@ -91,12 +91,15 @@ class App extends Component {
 
   handleSignIn()
   {
-    ApiCalendar.handleAuthClick();
+    ApiCalendar.handleAuthClick()
+    this.setState({isLoggedIn: true})
+    alert("Signed in!")
   }
 
   handleSignOut()
   {
     ApiCalendar.handleSignoutClick();
+    this.setState({isLoggedIn: false})
     alert("Signed out!")
   }
 
@@ -121,22 +124,15 @@ class App extends Component {
  };
 
   render () {
-    return (
-      <>
-        <Navbar bg="dark" variant="dark">
-          <Navbar.Brand>
-            <img
-              src="/logo192.png"
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-            />{' '}
-            Dividend Calendar
-          </Navbar.Brand>
-        </Navbar>
+    const isLoggedIn = this.state.isLoggedIn;
+    let button;
+    let body;
+    if (!isLoggedIn) {
+        button = <button type="submit"><i class="fa fa-google"></i> Sign in with Google</button>
+    } else {
+      body =
         <div class="header">
-          <Container className="p-3">
-          <Jumbotron>
+          {button}
           <h4> Select tickers below</h4>
           <InputGroup className="mb-3" value={this.state.value} onChange={this.handleChange}>
             <InputGroup.Prepend>
@@ -160,19 +156,35 @@ class App extends Component {
             </AgGridReact>
           </div>
           <div>
-          <button onClick={this.handleSignIn}>
-            sign-in
-          </button>
-          <button onClick={this.handleSignOut}>
-            sign-out
-          </button>
           <button onClick={this.showAllEvents}>
             Add events to calendar
           </button>
           </div>
+        </div>;
+
+      }
+
+    return(
+      <>
+      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand>
+            <img
+              src="/logo192.png"
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            />{' '}
+            Dividend Calendar
+          </Navbar.Brand>
+        </Navbar>
+        <Container className="p-3">
+          <Jumbotron>
+            {button}
+            {body}
           </Jumbotron>
-          </Container>
-        </div>
+        </Container>
         <footer className='footer mt-auto py-3 bg-dark text-white'>
           <div className='container'>
             <Nav
@@ -203,5 +215,6 @@ class App extends Component {
       </>
     )
   }
+
 }
 export default App

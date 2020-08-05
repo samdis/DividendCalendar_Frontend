@@ -1,3 +1,5 @@
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 .App {
   text-align: center;
 }
@@ -32,6 +34,7 @@
 /* Add some padding inside the card container */
 .container {
   padding: 2px 16px;
+  text-align: center;
 }
 
 .header {
