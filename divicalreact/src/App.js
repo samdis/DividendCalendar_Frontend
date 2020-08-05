@@ -128,11 +128,10 @@ class App extends Component {
     let button;
     let body;
     if (!isLoggedIn) {
-        button = <button type="submit"><i class="fa fa-google"></i> Sign in with Google</button>
+        button = <button class="login" type="submit" onClick={this.handleSignIn}><i class="fa fa-google"></i> Sign in with Google</button>
     } else {
       body =
         <div class="header">
-          {button}
           <h4> Select tickers below</h4>
           <InputGroup className="mb-3" value={this.state.value} onChange={this.handleChange}>
             <InputGroup.Prepend>
