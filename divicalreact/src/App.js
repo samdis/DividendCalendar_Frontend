@@ -13,6 +13,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import Nav from 'react-bootstrap/Nav'
+import Badge from 'react-bootstrap/Badge'
 
 class App extends Component {
   constructor(){
@@ -93,7 +94,7 @@ class App extends Component {
   {
     ApiCalendar.handleAuthClick()
     this.setState({isLoggedIn: true})
-    alert("Signed in!")
+    //alert("Signed in!")
   }
 
   handleSignOut()
@@ -128,7 +129,16 @@ class App extends Component {
     let button;
     let body;
     if (!isLoggedIn) {
-        button = <button class="login" type="submit" onClick={this.handleSignIn}><i class="fa fa-google"></i> Sign in with Google</button>
+        button =
+        <Button variant="primary"
+                size="lg"
+                class="login"
+                type="submit"
+                onClick={this.handleSignIn}
+                active
+        >
+        <i class="fa fa-google"></i> Sign in with Google
+        </Button>
     } else {
       body =
         <div class="header">
@@ -142,6 +152,7 @@ class App extends Component {
             </InputGroup.Prepend>
             <FormControl aria-describedby="basic-addon1" />
           </InputGroup>
+
           <div
               className="ag-theme-alpine"
               style={{
@@ -155,9 +166,9 @@ class App extends Component {
             </AgGridReact>
           </div>
           <div>
-          <button onClick={this.showAllEvents}>
-            Add events to calendar
-          </button>
+          <Button variant="secondary" size="lg" onClick={this.showAllEvents} block>
+            <i class="fa fa-calendar"></i> Add Events
+          </Button>
           </div>
         </div>;
 
