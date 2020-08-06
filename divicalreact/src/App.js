@@ -157,48 +157,22 @@ class App extends Component {
                 class="login"
                 type="submit"
                 onClick={this.handleSignIn}
-                active
+                block
         >
         <i class="fa fa-google"></i> Sign in with Google
-        </Button>
+        </Button>;
     } else {
-      body =
-        <div class="header">
-          <h2><i class="fa fa-search"></i> Select Stock Tickers</h2>
-          <InputGroup className="mb-3" value={this.state.value} onChange={this.handleChange}>
-            <InputGroup.Prepend>
-              <Button
-                variant="outline-secondary"
-                onClick={this.handleClick}
-                >Add</Button>
-            </InputGroup.Prepend>
-            <FormControl aria-describedby="basic-addon1" />
-          </InputGroup>
-
-          <div
-              className="ag-theme-alpine"
-              style={{
-              height: '250px',
-              width: '100%' }}
-              >
-            <AgGridReact
-              columnDefs={this.state.columnDefs}
-              rowData={this.state.rowData}
-               onGridReady={this.onGridReady.bind(this)}
-               >
-            </AgGridReact>
-          </div>
-          <div>
-          <Button variant="primary" size="lg" onClick={this.showAllEvents} block>
-            <i class="fa fa-calendar"></i> Add Events
-          </Button>
-          <Button variant="secondary" size="lg" onClick={this.handleSignOut} block>
-            <i class="fa fa-google"></i> Sign out
-          </Button>
-          </div>
+      button =
+        <div>
+        <Button variant="primary" size="lg" onClick={this.showAllEvents} block>
+          <i class="fa fa-calendar"></i> Add Events
+        </Button>
+        <Button variant="secondary" size="lg" onClick={this.handleSignOut} block>
+          <i class="fa fa-google"></i> Sign out
+        </Button>
         </div>;
-
       }
+
 
     return(
       <>
@@ -216,8 +190,35 @@ class App extends Component {
         </Navbar>
         <Container className="p-3">
           <Jumbotron>
-            {button}
-            {body}
+            <div class="header">
+              <h2><i class="fa fa-search"></i> Select Stock Tickers</h2>
+              <InputGroup className="mb-3" value={this.state.value} onChange={this.handleChange}>
+                <InputGroup.Prepend>
+                  <Button
+                    variant="outline-secondary"
+                    onClick={this.handleClick}
+                    >Add</Button>
+                </InputGroup.Prepend>
+                <FormControl aria-describedby="basic-addon1" />
+              </InputGroup>
+
+              <div
+                  className="ag-theme-alpine"
+                  style={{
+                  height: '250px',
+                  width: '100%' }}
+                  >
+                <AgGridReact
+                  columnDefs={this.state.columnDefs}
+                  rowData={this.state.rowData}
+                   onGridReady={this.onGridReady.bind(this)}
+                   >
+                </AgGridReact>
+              </div>
+              <div>
+              {button}
+              </div>
+            </div>
           </Jumbotron>
         </Container>
         <footer className='footer mt-auto py-3 bg-dark text-white'>
