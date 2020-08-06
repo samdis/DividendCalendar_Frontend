@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import './App.css';
+//Axios
 import axios from 'axios';
+//AG Grid
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+//Google Calendar API
 import ApiCalendar from 'react-google-calendar-api';
+//Bootstrap
+import Jumbotron    from 'react-bootstrap/Jumbotron';
+import Container    from 'react-bootstrap/Container';
+import Button       from 'react-bootstrap/Button'
+import Navbar       from 'react-bootstrap/Navbar'
+import InputGroup   from 'react-bootstrap/InputGroup'
+import FormControl  from 'react-bootstrap/FormControl'
+import Nav          from 'react-bootstrap/Nav'
+import Badge        from 'react-bootstrap/Badge'
 
-import Jumbotron from 'react-bootstrap/Jumbotron';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button'
-import Navbar from 'react-bootstrap/Navbar'
-import InputGroup from 'react-bootstrap/InputGroup'
-import FormControl from 'react-bootstrap/FormControl'
-import Nav from 'react-bootstrap/Nav'
 
 import ReactGA from 'react-ga';
 ReactGA.initialize('UA-174773976-1');
@@ -34,7 +39,7 @@ class App extends Component {
       isLoggedIn : false
     }
 
-    this.handleClick      = this.handleClick.bind(this);
+    this.handleAddAndClear      = this.handleAddAndClear.bind(this);
     this.handleChange     = this.handleChange.bind(this);
     this.addRowData       = this.addRowData.bind(this);
     //google cal
@@ -102,7 +107,7 @@ class App extends Component {
     }
   }
 
-  handleClick(){
+  handleAddAndClear(){
     this.handleAdd();
     this.resetValue();
   }
@@ -119,7 +124,6 @@ class App extends Component {
       console.log(this.state.rowData);
   }
 
-
   handleSignIn()
   {
     ApiCalendar.handleAuthClick()
@@ -133,18 +137,25 @@ class App extends Component {
     alert("Signed out!")
   }
 
-
-
   handleChange(event) {
     this.setState({value: event.target.value.toUpperCase()});
   }
 
   resetValue(){
+    this.setState({value : ""})
   }
 
   onGridReady = params => {
    params.api.sizeColumnsToFit();
- };
+  };
+
+  pillClick(ticker){
+    alert(ticker)
+    this.state.ticker = ticker;
+    alert(this.state.value);
+    this.handleAddAndClear();
+    //handleAdd;
+  }
 
   render () {
     const isLoggedIn = this.state.isLoggedIn;
@@ -191,17 +202,36 @@ class App extends Component {
         <Container className="p-3">
           <Jumbotron>
             <div class="header">
-              <h2><i class="fa fa-search"></i> Select Stock Tickers</h2>
-              <InputGroup className="mb-3" value={this.state.value} onChange={this.handleChange}>
+              <InputGroup className="t-3"
+                          onChange={this.handleChange}>
                 <InputGroup.Prepend>
                   <Button
-                    variant="outline-secondary"
-                    onClick={this.handleClick}
+                    variant="outline-primary"
+                    onClick={this.handleAddAndClear}
                     >Add</Button>
                 </InputGroup.Prepend>
-                <FormControl aria-describedby="basic-addon1" />
+                <FormControl aria-describedby="basic-addon1"
+                              placeholder="Enter a stock ticker"
+                              value={this.state.value}
+                />
               </InputGroup>
-
+              <ul class="nav nav-pills">
+                <li class="nav-item">
+                  <a class="nav-link clear" href="#" onClick={() => {this.setState({value: 'MSFT'}, this.handleAddAndClear)}}>
+                    <Badge pill variant="secondary">MSFT</Badge>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link clear" href="#" onClick={() => {this.setState({value: 'PFO'}, this.handleAddAndClear)}}>
+                    <Badge pill variant="secondary">PFO</Badge>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link clear" href="#" onClick={() => {this.setState({value: 'LMT'}, this.handleAddAndClear)}}>
+                    <Badge pill variant="secondary">LMT</Badge>
+                  </a>
+                </li>
+              </ul>
               <div
                   className="ag-theme-alpine"
                   style={{
