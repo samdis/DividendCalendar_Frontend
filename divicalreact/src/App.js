@@ -15,7 +15,7 @@ import FormControl from 'react-bootstrap/FormControl'
 import Nav from 'react-bootstrap/Nav'
 
 import ReactGA from 'react-ga';
-ReactGA.initialize('UA-174773976-1', {debug : true});
+ReactGA.initialize('UA-174773976-1');
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 class App extends Component {
