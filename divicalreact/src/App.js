@@ -17,6 +17,8 @@ import InputGroup   from 'react-bootstrap/InputGroup'
 import FormControl  from 'react-bootstrap/FormControl'
 import Nav          from 'react-bootstrap/Nav'
 import Badge        from 'react-bootstrap/Badge'
+import Popover        from 'react-bootstrap/Popover'
+import OverlayTrigger        from 'react-bootstrap/OverlayTrigger'
 
 
 import ReactGA from 'react-ga';
@@ -198,6 +200,34 @@ class App extends Component {
             />{' '}
             Dividend Calendar
           </Navbar.Brand>
+
+          <Nav className="ml-auto">
+          <OverlayTrigger
+            trigger="click"
+            key="bottom"
+            placement="bottom"
+            overlay={
+              <Popover id={`popover-positioned-bottom`}>
+                <Popover.Title as="h3">Help</Popover.Title>
+                <Popover.Content>
+                <strong>Welcome to dividend calendar</strong>
+                  <ol type="1">
+                    <li>Enter or select a stock ticker</li>
+                    <li>Add ticker(s) to the list</li>
+                    <li>Connect to your Google Calendar</li>
+                    <li>Add ex-dividend date event(s) to your calendar</li>
+                  </ol>
+                </Popover.Content>
+              </Popover>
+            }
+          >
+            <Nav.Link>
+              <i class="fa fa-question-circle fa-lg" aria-hidden="true"></i>
+
+            </Nav.Link>
+            </OverlayTrigger>
+          </Nav>
+
         </Navbar>
         <Container className="p-3">
           <Jumbotron>
